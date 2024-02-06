@@ -9,6 +9,10 @@ public class MemesItem{
 	private int height;
 	private int boxCount;
 
+	public MemesItem() {
+	}
+
+
 	public void setName(String name){
 		this.name = name;
 	}

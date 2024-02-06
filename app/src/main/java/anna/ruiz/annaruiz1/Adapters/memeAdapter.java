@@ -47,8 +47,8 @@ public class memeAdapter extends RecyclerView.Adapter<memeAdapter.MemeVH> {
 
         holder.lbName.setText(mem.getName());
         holder.lbUrl.setText(mem.getUrl());
-    //    holder.lbHeight.setText(mem.getHeight());
-     //   holder.lbWidth.setText(mem.getWidth());
+        holder.lbHeight.setText("Height: "+String.valueOf(mem.getHeight()));
+        holder.lbWidth.setText("Width: " +String.valueOf(mem.getWidth()));
 
         holder.btnFavorito.setOnClickListener(new View.OnClickListener() {
             @Override
