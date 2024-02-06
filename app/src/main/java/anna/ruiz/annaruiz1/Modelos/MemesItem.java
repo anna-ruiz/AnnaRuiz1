@@ -1,12 +1,23 @@
 package anna.ruiz.annaruiz1.Modelos;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "meme")
 public class MemesItem{
+	@DatabaseField(canBeNull = false)
 	private String name;
+	@DatabaseField()
 	private int width;
+	@DatabaseField(canBeNull = false)
 	private String id;
+	@DatabaseField()
 	private String url;
+	@DatabaseField()
 	private int captions;
+	@DatabaseField()
 	private int height;
+	@DatabaseField()
 	private int boxCount;
 
 	public MemesItem() {

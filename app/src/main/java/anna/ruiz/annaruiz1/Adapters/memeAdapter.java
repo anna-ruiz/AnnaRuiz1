@@ -6,19 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import anna.ruiz.annaruiz1.Configuraciones.configuracion;
 import anna.ruiz.annaruiz1.Modelos.MemesItem;
 import anna.ruiz.annaruiz1.R;
+import anna.ruiz.annaruiz1.helpers.MemeHelper;
 
 public class memeAdapter extends RecyclerView.Adapter<memeAdapter.MemeVH> {
     private Context context;
     private int resource;
     private List<MemesItem> objects;
+     private MemeHelper helper;
+    private Dao<MemesItem, String> daoMemes ;
+    ArrayList<MemesItem> listaMemesLocal;
 
     public memeAdapter(Context context, int resource, List<MemesItem> objects) {
         this.context = context;
@@ -53,7 +63,27 @@ public class memeAdapter extends RecyclerView.Adapter<memeAdapter.MemeVH> {
         holder.btnFavorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //accion favorito
+                helper = new MemeHelper(context, configuracion.BD_NOMBRE, null, configuracion.BD_VERSION);
+                /*if (helper != null){
+                    try {*/
+                        daoMemes = helper.getDaoMemes();
+                       /* if (daoMemes != null){
+                            listaMemesLocal.addAll(daoMemes.queryForAll());
+
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }*/
+
+                
+                try {
+                    daoMemes.create(mem);
+                } catch (SQLException e) {
+                    Toast.makeText(context, "Error al añadir a favoritos", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+
             }
         });
     }

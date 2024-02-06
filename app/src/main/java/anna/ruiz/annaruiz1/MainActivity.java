@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -15,9 +18,12 @@ import javax.net.ssl.HttpsURLConnection;
 import anna.ruiz.annaruiz1.Adapters.memeAdapter;
 import anna.ruiz.annaruiz1.Conexiones.ApiConexiones;
 import anna.ruiz.annaruiz1.Conexiones.RetrofitObject;
+import anna.ruiz.annaruiz1.Configuraciones.configuracion;
+import anna.ruiz.annaruiz1.Modelos.Data;
 import anna.ruiz.annaruiz1.Modelos.MemesItem;
 import anna.ruiz.annaruiz1.Modelos.Respuesta;
 import anna.ruiz.annaruiz1.databinding.ActivityMainBinding;
+import anna.ruiz.annaruiz1.helpers.MemeHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private memeAdapter adapter;
     private RecyclerView.LayoutManager lm;
     private ArrayList<MemesItem> listaMemes;
+    private ArrayList<MemesItem> listaMemesLocal;
     private ActivityMainBinding binding;
+
+    private MemeHelper helper;
+    private Dao<MemesItem, String> daoMemes;
 
 
     @Override
@@ -46,10 +56,24 @@ public class MainActivity extends AppCompatActivity {
 
         binding.contenedor.setAdapter(adapter);
         binding.contenedor.setLayoutManager(lm);
-        
-        
+
         traerInfoApi();
-        
+
+/*
+
+        helper = new MemeHelper(this, configuracion.BD_NOMBRE, null, configuracion.BD_VERSION);
+        if (helper != null){
+            try {
+                daoMemes = helper.getDaoMemes();
+                listaMemesLocal.addAll(daoMemes.queryForAll());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+*/
+
+
+
     }
 
     private void traerInfoApi() {
